@@ -9,7 +9,7 @@ The platform operates inside a local network using a dedicated subnet.
 | Parameter     | Value          |
 | ------------- | -------------- |
 | Network       | 192.168.1.0/24 |
-| Gateway       | 192.168.1.254  |
+| Gateway       | 192.168.1.x54  |
 | IP Assignment | Static         |
 
 ---
@@ -25,7 +25,7 @@ Application + Automation Server
 | Parameter  | Value                   |
 | ---------- | ----------------------- |
 | Hostname   | ubuntu-server           |
-| IP Address | 192.168.1.75            |
+| IP Address | 192.168.1.x5            |
 | OS         | Ubuntu Server 24.04 LTS |
 
 Services:
@@ -47,7 +47,7 @@ Edge Monitoring Node
 | Parameter  | Value        |
 | ---------- | ------------ |
 | Hostname   | toshiba-edge |
-| IP Address | 192.168.1.77 |
+| IP Address | 192.168.1.x7 |
 | OS         | Debian       |
 
 Services:
@@ -69,7 +69,7 @@ Observability Server
 | Parameter  | Value            |
 | ---------- | ---------------- |
 | Hostname   | hp-observability |
-| IP Address | 192.168.1.78     |
+| IP Address | 192.168.1.x8     |
 | OS         | Debian           |
 
 Services:
@@ -174,6 +174,79 @@ HP Debian
 
 Ubuntu Watchdog
 ```
+---
+
+Network Configuration
+
+The platform operates inside a local network using a static IP configuration.
+
+Parameter	Value
+Network	192.168.1.0/24
+Gateway	192.168.1.x54
+Addressing	Static IP
+Service Ports
+Ubuntu Server
+
+Node: Application + Automation Server
+
+IP Address:
+
+192.168.1.x8
+Service	Port	Protocol	Deployment
+SSH	22	TCP	Native
+Nginx	80	TCP	Docker
+Nginx HTTPS	443	TCP	Docker
+cAdvisor	8080	TCP	Docker
+Node Exporter	9100	TCP	Docker
+HP Debian
+
+Node: Observability Server
+
+IP Address:
+
+192.168.1.x8
+Service	Port	Protocol
+SSH	22	TCP
+Grafana	3000	TCP
+Prometheus	9090	TCP
+Alertmanager	9093	TCP
+Loki	3100	TCP
+Toshiba NB200
+
+Node: Edge Monitoring Node
+
+IP Address:
+
+192.168.1.x7
+Service	Port	Protocol
+SSH	22	TCP
+Node Exporter	9100	TCP
+Blackbox Exporter	9115	TCP
+Network Communication
+Monitoring Flow
+Ubuntu Server
+      |
+      | Metrics
+      v
+HP Observability Server
+Toshiba Edge Node
+      |
+      | Metrics
+      v
+HP Observability Server
+Deployment Validation
+
+Required checks:
+
+Verify SSH connectivity between nodes.
+Validate static IP configuration.
+Confirm firewall rules.
+Verify exposed ports.
+Confirm monitoring endpoints are reachable.
+
+Example:
+
+curl http://192.168.1.x5:9100/metrics
 
 ---
 
