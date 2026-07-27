@@ -222,27 +222,27 @@ Objectives:
 
 ## Phase 1 - Base Server
 
-* [ ] Ubuntu Server hardening.
-* [ ] System optimization.
-* [ ] Docker Engine installation.
-* [ ] DevOps environment preparation.
+* [x] Ubuntu Server hardening.
+* [x] System optimization/debloat.
+* [x] Docker Engine installation.
+* [x] DevOps environment preparation.
 
 ---
 
 ## Phase 2 - Observability
 
-* [ ] Prometheus installation.
-* [ ] Grafana installation.
-* [ ] Alertmanager configuration.
-* [ ] Metrics integration.
+* [x] Prometheus installation.
+* [x] Grafana installation.
+* [x] Alertmanager configuration.
+* [x] Metrics integration.
 
 ---
 
 ## Phase 3 - Logging
 
-* [ ] Loki implementation.
-* [ ] Promtail configuration.
-* [ ] Centralized log management.
+* [x] Loki implementation.
+* [x] Promtail configuration.
+* [x] Centralized log management.
 
 ---
 
