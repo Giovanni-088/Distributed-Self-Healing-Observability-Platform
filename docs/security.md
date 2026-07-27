@@ -46,6 +46,58 @@ ICMP echo-request
 ```
 
 Used for network diagnostics.
+---
+# Observability Server Firewall Rules
+
+The Observability Server uses nftables with a default deny policy.
+
+Default behavior:
+
+```text
+Incoming traffic: DROP
+```
+Allowed services:
+
+| Port | Service       |
+| ---- | ------------- |
+| 22   | SSH           |
+| 3000 | Grafana       |
+| 9090 | Prometheus    |
+| 9093 | Alertmanager  |
+| 3100 | Loki          |
+| 9100 | Node Exporter |
+
+# Docker Forward Chain Consideration
+
+The Docker networking subsystem requires packet forwarding.
+
+The forward chain must remain:
+
+policy accept
+
+Changing this policy to DROP can block traffic to Docker published ports even when services are running correctly.
+
+Reason:
+
+Docker NAT traffic passes through the forward chain before reaching containers.
+
+# Firewall Management Warning
+
+Avoid executing:
+
+nft flush ruleset
+
+on systems running Docker.
+
+This command removes all nftables rules, including Docker-managed NAT rules.
+
+Recommended approach:
+
+nft -f /etc/nftables.conf
+
+or flushing only the custom firewall table:
+
+nft flush table inet filter
 
 ---
 

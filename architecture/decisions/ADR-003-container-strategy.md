@@ -99,6 +99,49 @@ docker compose up -d
 
 ---
 
+# Docker Network Strategy Decision
+
+## Context
+
+A custom Docker network was initially considered to allow services to communicate using container names.
+
+Example:
+
+grafana → prometheus
+grafana → loki
+
+However, connecting running containers to an additional Docker network using:
+
+docker network connect
+
+caused routing changes inside containers.
+
+The additional network modified the default route, affecting outbound connectivity from containers to the physical LAN.
+
+# Decision
+
+The platform will not use dynamic Docker network connections after container deployment.
+
+Services will use:
+
+Individual Docker Compose networks.
+Host physical IP communication when required.
+
+Example:
+
+Grafana → Observability Node IP → Prometheus
+Grafana → Observability Node IP → Loki
+
+# Lessons Learned
+
+For future Infrastructure as Code implementations:
+
+Define external Docker networks inside docker-compose.yml before deployment.
+Avoid modifying container networking after services are running.
+Validate routing behavior before applying network changes.
+
+---
+
 # Future Considerations
 
 All future application services should prioritize container deployment unless there is a specific operational reason to use native installation.

@@ -176,7 +176,7 @@ Ubuntu Watchdog
 ```
 ---
 
-Network Configuration
+# Network Configuration
 
 The platform operates inside a local network using a static IP configuration.
 
@@ -184,8 +184,24 @@ Parameter	Value
 Network	192.168.1.0/24
 Gateway	192.168.1.x54
 Addressing	Static IP
-Service Ports
-Ubuntu Server
+
+# Gateway Configuration
+
+The infrastructure uses a static network configuration.
+
+The default gateway is verified against the physical network configuration instead of assuming common defaults.
+
+Configured gateway:
+
+```text
+<LOCAL_GATEWAY>
+```
+
+---
+
+## Service Ports
+
+# Ubuntu Server
 
 Node: Application + Automation Server
 
@@ -198,20 +214,29 @@ Nginx	80	TCP	Docker
 Nginx HTTPS	443	TCP	Docker
 cAdvisor	8080	TCP	Docker
 Node Exporter	9100	TCP	Docker
-HP Debian
+
+# HP Debian
 
 Node: Observability Server
 
 IP Address:
 
 192.168.1.x8
-Service	Port	Protocol
-SSH	22	TCP
-Grafana	3000	TCP
-Prometheus	9090	TCP
-Alertmanager	9093	TCP
-Loki	3100	TCP
-Toshiba NB200
+
+Role:
+
+Centralized Monitoring Infrastructure
+
+| Service | Port | Protocol | Deployment |
+|---|---|---|---|
+| SSH | 22 | TCP | Native |
+| Grafana | 3000 | TCP | Docker |
+| Prometheus | 9090 | TCP | Docker |
+| Alertmanager | 9093 | TCP | Docker |
+| Loki | 3100 | TCP | Docker |
+| Node Exporter | 9100 | TCP | Docker |
+
+# Toshiba NB200
 
 Node: Edge Monitoring Node
 
@@ -233,8 +258,11 @@ Toshiba Edge Node
       |
       | Metrics
       v
-HP Observability Server
-Deployment Validation
+
+
+## HP Observability Server
+
+# Deployment Validation
 
 Required checks:
 
