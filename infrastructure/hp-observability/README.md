@@ -71,3 +71,33 @@ Current targets:
 | Edge Node | DOWN (Expected - pending deployment) |
 
 The edge node is expected to remain unavailable until its monitoring services are deployed.
+
+## Resilience Status
+
+Verified:
+
+- Docker enabled at boot.
+- nftables enabled at boot.
+- Fail2ban enabled at boot.
+- Static network configuration persistent.
+- health-check.service enabled.
+
+Current running services:
+
+| Service | Status |
+|---|---|
+| Prometheus | Healthy |
+| Grafana | Healthy |
+| Loki | Healthy |
+| Alertmanager | Healthy |
+| Node Exporter | Healthy |
+| Promtail | Running |
+
+Prometheus monitoring status:
+
+| Target | Status |
+|---|---|
+| Observability Node | UP |
+| Application Node | UP |
+| Prometheus | UP |
+| Edge Node | DOWN (Expected - pending deployment) |

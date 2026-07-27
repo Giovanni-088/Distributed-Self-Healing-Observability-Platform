@@ -21,7 +21,7 @@ The server is responsible for:
 | -------------------- | ------------------------------- |
 | Role                 | Application + Automation Server |
 | Operating System     | Ubuntu Server 24.04 LTS         |
-| IP Address           | 192.168.1.75                    |
+| IP Address           | 192.168.1.x5                    |
 | Container Runtime    | Docker Engine                   |
 | Container Management | Docker Compose                  |
 
@@ -347,3 +347,21 @@ Pending:
 * Application deployments.
 * CI/CD integration.
 * Ansible automation.
+
+## Resilience Status
+
+Verified:
+
+- Docker enabled at boot.
+- nftables enabled at boot.
+- Fail2ban enabled at boot.
+- Static network configuration persistent.
+- health-check.service enabled.
+
+Post-reboot behavior:
+
+- Docker containers recover automatically.
+- Health validation executes automatically.
+- Results are stored in persistent logs.
+
+---

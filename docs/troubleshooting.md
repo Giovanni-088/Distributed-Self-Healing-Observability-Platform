@@ -270,3 +270,66 @@ Firewall permissions.
 External access.
 
 ---
+
+# Loki Startup Delay and Health Endpoint Validation
+
+## Problem
+
+During health-check development, Loki initially returned:
+
+```text
+503 Ingester not ready
+```
+
+# Diagnosis
+
+The issue was not caused by:
+
+Incorrect configuration.
+Failed deployment.
+Health-check script errors.
+
+Loki requires an internal initialization period before becoming fully ready.
+
+# Root Cause
+
+Loki performs a warm-up process during startup.
+
+Immediately after container creation, the service may reject health requests until internal components finish initialization.
+
+# Fix
+
+The solution was waiting for the normal startup period instead of modifying the configuration or health-check logic.
+
+# Lesson
+
+Health checks must consider application startup behavior.
+
+A temporary unhealthy state after boot does not always indicate a failure.
+
+# Service Health Endpoint Validation
+
+## Problem
+
+The root endpoint (/) was not a reliable health check for several services.
+
+# Diagnosis
+
+Different services expose dedicated health endpoints.
+
+# Final Health Mapping
+
+| Service       | Endpoint      |
+| ------------- | ------------- |
+| Loki          | `/ready`      |
+| Prometheus    | `/-/healthy`  |
+| Alertmanager  | `/-/healthy`  |
+| Grafana       | `/api/health` |
+| Node Exporter | `/metrics`    |
+| cAdvisor      | `/metrics`    |
+
+# Lesson
+
+Health validation should use application-specific endpoints instead of generic HTTP checks.
+
+---

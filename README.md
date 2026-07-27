@@ -134,6 +134,42 @@ Technology stack:
 
 ---
 
+# Scripts and Utilities
+
+## Universal Health Check
+
+The project includes a universal health validation script:
+
+```text
+scripts/health-check.sh
+```
+
+The script is shared across all infrastructure nodes.
+
+Instead of using different versions per server, it dynamically detects:
+
+- Running Docker containers.
+- Published ports.
+- Available health endpoints.
+
+# Supported Health Endpoints
+
+| Service       | Endpoint      |
+| ------------- | ------------- |
+| Loki          | `/ready`      |
+| Prometheus    | `/-/healthy`  |
+| Alertmanager  | `/-/healthy`  |
+| Grafana       | `/api/health` |
+| Node Exporter | `/metrics`    |
+| cAdvisor      | `/metrics`    |
+| Nginx         | `/`           |
+
+# Design Goal
+
+Maintaining a single universal health-check script prevents configuration drift between nodes and avoids server-specific versions being overwritten during Git synchronization.
+
+---
+
 ## Self-Healing
 
 The system implements automated recovery mechanisms.
