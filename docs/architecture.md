@@ -22,7 +22,7 @@ This separation allows independent scaling, troubleshooting and maintenance of e
                          LAN Network
 
                     Gateway
-                 192.168.1.254
+                 192.168.1.x54
 
                           |
         -----------------------------------------
@@ -30,7 +30,7 @@ This separation allows independent scaling, troubleshooting and maintenance of e
         |                  |                    |
 
  Ubuntu Server          HP Debian          Toshiba NB200
- 192.168.1.75           192.168.1.78       192.168.1.77
+ 192.168.1.x5           192.168.1.x8       192.168.1.x7
 
  Application            Observability      Edge Monitoring
  Automation             Server             Node
@@ -73,7 +73,7 @@ Application + Automation Server
 ### IP Address
 
 ```
-192.168.1.75
+192.168.1.x5
 ```
 
 ---
@@ -170,7 +170,7 @@ Responsible for:
 ### IP Address
 
 ```
-192.168.1.78
+192.168.1.x8
 ```
 
 ---
@@ -206,7 +206,7 @@ Collected data:
 ### IP Address
 
 ```
-192.168.1.77
+192.168.1.x7
 ```
 
 ---

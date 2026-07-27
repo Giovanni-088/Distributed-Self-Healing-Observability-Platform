@@ -17,13 +17,13 @@ The goal is to build an environment where infrastructure can be monitored, analy
 ```text
                          LAN
                           |
-                 Gateway 192.168.1.254
+                 Gateway 192.168.1.x54
                           |
         ---------------------------------------
         |                  |                  |
         |                  |                  |
  Ubuntu Server        HP Debian          Toshiba NB200
- 192.168.1.75         192.168.1.78       192.168.1.77
+ 192.168.1.x5         192.168.1.x8       192.168.1.x7
 
  Application          Observability      Edge Monitoring
  Automation           Server             Node
@@ -55,7 +55,7 @@ Responsibilities:
 IP Address:
 
 ```text
-192.168.1.75
+192.168.1.x5
 ```
 
 ---
@@ -82,7 +82,7 @@ Main services:
 IP Address:
 
 ```text
-192.168.1.78
+192.168.1.x8
 ```
 
 ---
@@ -106,7 +106,7 @@ Services:
 IP Address:
 
 ```text
-192.168.1.77
+192.168.1.x7
 ```
 
 ---

@@ -45,7 +45,7 @@ The default gateway configuration was incorrect.
 Expected gateway:
 
 ```
-192.168.1.254
+192.168.1.x54
 ```
 
 ---
@@ -79,7 +79,7 @@ Network:
 192.168.1.0/24
 
 Gateway:
-192.168.1.254
+192.168.1.x54
 
 Static IP:
 Configured according to node assignment
