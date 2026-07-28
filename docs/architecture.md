@@ -289,6 +289,17 @@ Recovery Action
 
 Incident Log
 ```
+---
+
+## Platform Deployment Summary
+
+| Node | Runtime | Primary Services |
+|------|---------|------------------|
+| Ubuntu Server | Docker | Nginx, cAdvisor, Node Exporter |
+| Observability Server | Docker | Prometheus, Grafana, Alertmanager, Loki, Promtail, Node Exporter |
+| Edge Monitoring Node | Native binaries | Node Exporter, Blackbox Exporter |
+
+The platform intentionally combines containerized workloads and native system services.
 
 ---
 

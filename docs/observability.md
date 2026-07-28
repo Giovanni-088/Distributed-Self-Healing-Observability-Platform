@@ -79,3 +79,16 @@ Loki
 Grafana
 
 ---
+
+## Future Improvements
+
+The Blackbox Exporter is operational but currently only exposes its own metrics.
+
+Future work includes configuring Prometheus probe targets using the standard relabeling pattern to monitor:
+
+- Internal HTTP services
+- Network gateways
+- Infrastructure endpoints
+- ICMP availability checks
+
+---

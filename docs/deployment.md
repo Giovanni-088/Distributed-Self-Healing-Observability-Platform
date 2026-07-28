@@ -58,6 +58,14 @@ Services:
 | Node Exporter     | 9100 |
 | Blackbox Exporter | 9115 |
 
+## Edge Node Network Configuration
+
+The Edge Monitoring Node uses the traditional **ifupdown** networking stack instead of Netplan.
+
+Static addressing is configured through `/etc/network/interfaces`, providing persistent network configuration across reboots.
+
+Unlike the Ubuntu Server, no Netplan configuration is required on this node.
+
 ---
 
 ## HP Debian

@@ -154,6 +154,16 @@ trivy --version
 
 ---
 
+## Linux Capabilities
+
+Blackbox Exporter requires access to raw ICMP sockets for network probing.
+
+Instead of running the service as root, the binary is granted the `CAP_NET_RAW` capability using `setcap`.
+
+This follows the principle of least privilege by providing only the permissions required for ICMP probes while avoiding full administrative privileges.
+
+---
+
 # Security Principles
 
 The platform follows:

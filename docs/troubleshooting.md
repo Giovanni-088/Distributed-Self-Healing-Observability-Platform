@@ -333,3 +333,29 @@ Different services expose dedicated health endpoints.
 Health validation should use application-specific endpoints instead of generic HTTP checks.
 
 ---
+
+## Docker Repository Reports Unsupported Architecture
+
+### Problem
+
+Docker packages could not be installed because no installation candidate was available.
+
+### Diagnosis
+
+The Docker repository was correctly configured for the detected system architecture.
+
+### Root Cause
+
+The operating system was installed as **i386**, while Docker CE only distributes packages for supported architectures such as amd64.
+
+The processor itself supports 64-bit execution, but the installed operating system does not.
+
+### Resolution
+
+The platform architecture was adapted to use native Prometheus exporters instead of Docker containers on the Edge Monitoring Node.
+
+### Lesson Learned
+
+Unexpected package manager output may reveal underlying platform characteristics rather than configuration errors. Always verify the detected architecture before assuming a repository misconfiguration.
+
+---
