@@ -1,3 +1,8 @@
 *.swp
 *.swo
 *~
+*.env
+.watchdog_env
+__pycache__/
+*.pyc
+venv/
