@@ -173,3 +173,21 @@ The platform follows:
 * Automated vulnerability scanning.
 * Secure remote administration.
 * Container security validation.
+
+---
+
+## Secrets Management
+
+Sensitive credentials are never stored inside the repository.
+
+The watchdog loads runtime secrets exclusively from environment variables provided through a local environment file outside the Git repository.
+
+Additional safeguards include:
+
+- Environment files excluded through `.gitignore`.
+- File permissions restricted to the local user.
+- No credentials committed to version control.
+
+This approach minimizes the risk of accidental credential exposure while maintaining a reproducible deployment process.
+
+---

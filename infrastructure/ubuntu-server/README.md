@@ -365,3 +365,18 @@ Post-reboot behavior:
 - Results are stored in persistent logs.
 
 ---
+
+## Watchdog Service
+
+The Self-Healing Engine runs as a dedicated systemd service.
+
+Key design decisions include:
+
+- Automatic startup after Docker and networking are available.
+- Automatic restart if the watchdog process terminates unexpectedly.
+- Python virtual environment used directly without shell activation.
+- Runtime configuration loaded from an external environment file.
+
+This ensures that the recovery engine remains available after reboots without requiring manual intervention.
+
+---

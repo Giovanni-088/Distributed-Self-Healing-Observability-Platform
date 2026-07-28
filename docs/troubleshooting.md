@@ -359,3 +359,29 @@ The platform architecture was adapted to use native Prometheus exporters instead
 Unexpected package manager output may reveal underlying platform characteristics rather than configuration errors. Always verify the detected architecture before assuming a repository misconfiguration.
 
 ---
+
+## systemd Environment Variables Not Loaded
+
+### Problem
+
+The watchdog service started successfully, but Telegram notifications were never delivered.
+
+### Diagnosis
+
+Systemd ignored the environment variables defined in the external configuration file.
+
+### Root Cause
+
+The environment file used shell syntax (`export KEY=value`), while systemd expects plain `KEY=value` assignments.
+
+The service continued running because the notification module was intentionally designed to fail safely when credentials are unavailable.
+
+### Resolution
+
+Rewrite the environment file using the syntax expected by systemd and verify the loaded variables from the running process environment.
+
+### Lesson Learned
+
+Files with the `.env` extension are not interpreted identically by every application. Always verify the expected syntax for the runtime environment instead of assuming shell-compatible behavior.
+
+---
