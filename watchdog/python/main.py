@@ -10,7 +10,7 @@ Usage:
 import os
 import time
 import logging
-from datetime import datetime
+from datetime import datetime, timezone
 
 import docker_monitor
 import recovery
@@ -42,7 +42,7 @@ logger = logging.getLogger("watchdog.main")
 
 def log_incident(container_name: str, outcome: str, attempts: int = 0) -> None:
     """Logs an incident to a dedicated file, separate from the general log."""
-    timestamp = datetime.utcnow().isoformat()
+    timestamp = datetime.now(timezone.utc).isoformat()
     with open(INCIDENT_LOG, "a") as f:
         f.write(f"{timestamp} | container={container_name} | outcome={outcome} | attempts={attempts}\n")
 
