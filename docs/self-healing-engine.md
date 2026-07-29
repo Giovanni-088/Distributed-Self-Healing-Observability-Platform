@@ -155,6 +155,16 @@ Including the hostname removes ambiguity during multi-node incident response and
 
 Each node implements the recovery strategy that best matches its architecture while maintaining the same self-healing objective across the platform.
 
+### Validation During Infrastructure Automation
+
+An unexpected validation occurred during the Infrastructure as Code deployment.
+
+While troubleshooting container networking after firewall automation, one monitored service became temporarily unavailable.
+
+The watchdog detected the failure, restarted the affected service automatically, and restored normal operation without manual intervention.
+
+Unlike previous controlled chaos tests, this incident originated from a real infrastructure deployment, providing additional evidence that the recovery system operates correctly under real operational conditions.
+
 ## Future Improvements
 
 Planned enhancements include:

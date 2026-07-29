@@ -301,9 +301,11 @@ Objectives:
 
 ## Phase 6 - Automation
 
-* [ ] Ansible playbooks.
-* [ ] Maintenance scripts.
-* [ ] CI/CD pipeline.
+* [x] Infrastructure Hardening Playbook
+* [x] Docker Deployment Playbook
+* [x] Monitoring Deployment Playbook
+* [x] Versioned Jinja2 Templates
+* [ ] CI/CD Pipeline
 
 ---
 

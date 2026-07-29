@@ -409,3 +409,55 @@ Install the appropriate virtual environment package for the installed Python ver
 Do not assume Python development packages are installed by default across different Linux distributions. Verify package availability during deployment.
 
 ---
+
+## SSH Key Distribution Failed After SSH Hardening
+
+### Problem
+
+Automated SSH key deployment using `ssh-copy-id` failed.
+
+### Diagnosis
+
+Authentication attempts were rejected even though the destination hosts were reachable.
+
+### Root Cause
+
+Password authentication had already been disabled as part of the SSH hardening process.
+
+Since `ssh-copy-id` relies on password authentication during the initial bootstrap, it could no longer install the new automation key.
+
+### Resolution
+
+The public key was installed manually using an already authenticated management session.
+
+### Lesson Learned
+
+Automation keys should be deployed before disabling password authentication, or an alternative authenticated management channel should already be available.
+
+## nftables Reload Broke Docker Networking
+
+### Problem
+
+Container networking stopped working immediately after applying firewall changes through Ansible.
+
+### Diagnosis
+
+Docker containers lost external connectivity and published ports became unreachable.
+
+### Root Cause
+
+Reloading the firewall configuration removed Docker-managed NAT rules.
+
+Although the custom firewall configuration remained valid, Docker's networking rules had to be recreated.
+
+### Resolution
+
+The Ansible handler chain was updated so that every firewall reload automatically restarts Docker when Docker is installed.
+
+### Lesson Learned
+
+Infrastructure automation should permanently solve recurring operational issues.
+
+A manual fix is not considered complete until it is incorporated into the automation workflow itself.
+
+---

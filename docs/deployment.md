@@ -425,13 +425,101 @@ git push
 
 ---
 
+## Automation with Ansible
+
+Infrastructure provisioning and configuration management are automated using Ansible.
+
+The Application Server acts as the control node, managing all infrastructure from a single location.
+
+### Inventory Design
+
+The inventory is organized by infrastructure role:
+
+- Application Server
+- Observability Server
+- Edge Monitoring Node
+- Docker Hosts (group)
+
+The Application Server is managed locally, while remote nodes are accessed through SSH.
+
+Group variables are used to customize firewall rules, service deployment, and host-specific configuration without duplicating playbooks.
+
+### Passwordless Privilege Escalation
+
+Automation requires passwordless privilege escalation.
+
+Each managed node grants passwordless sudo through a dedicated sudoers configuration, allowing Ansible to execute privileged tasks non-interactively while maintaining a controlled security model.
+
+___
+
+### Docker Deployment
+
+Docker installation is fully automated through `docker.yml`.
+
+The playbook:
+
+- Installs Docker Engine.
+- Installs the Compose Plugin.
+- Configures the official Docker repository.
+- Adds the appropriate local user to the Docker group.
+- Supports both Ubuntu and Debian using Ansible facts.
+
+The playbook is idempotent, allowing repeated executions without changing an already compliant system.
+
+---
+
+### Monitoring Deployment
+
+Monitoring services are deployed through a single playbook containing multiple plays.
+
+```text
+Inventory
+      │
+      ▼
+Groups
+      │
+      ▼
+monitoring.yml
+      │
+      ├── Application Server
+      │       ├── Nginx
+      │       ├── cAdvisor
+      │       └── Node Exporter
+      │
+      └── Observability Server
+              ├── Prometheus
+              ├── Grafana
+              ├── Alertmanager
+              ├── Loki
+              ├── Promtail
+              └── Node Exporter
+```
+
+Each infrastructure role receives only the services appropriate for that node while sharing a common deployment workflow.
+
+---
+
+## Phase 6 Summary
+
+Infrastructure automation has been successfully implemented.
+
+The complete Ubuntu Server and Observability Server environments can now be rebuilt from scratch using three playbooks:
+
+- `hardening.yml`
+- `docker.yml`
+- `monitoring.yml`
+
+This establishes Git as the single source of truth for infrastructure configuration and fulfills the Infrastructure as Code objective of the project.
+
+---
+
 # Validation Checklist
 
 Before continuing:
 
-* [ ] All nodes reachable by SSH.
-* [ ] Static IP configuration verified.
-* [ ] Gateway reachable.
-* [ ] DNS resolution working.
-* [ ] Required ports accessible.
-* [ ] Monitoring services reachable.
+* [x] All nodes reachable by SSH.
+* [x] Static IP configuration verified.
+* [x] Gateway reachable.
+* [x] DNS resolution working.
+* [x] Required ports accessible.
+* [x] Monitoring services reachable.
