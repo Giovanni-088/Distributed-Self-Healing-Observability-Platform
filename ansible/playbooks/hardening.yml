@@ -48,11 +48,23 @@
         line: 'PasswordAuthentication no'
       notify: Restart sshd
 
+    - name: Check if Docker is installed
+      command: which docker
+      register: docker_check
+      changed_when: false
+      failed_when: false
+
   handlers:
     - name: Reload nftables
       systemd:
         name: nftables
         state: restarted
+
+    - name: Restart docker if present
+      systemd:
+        name: docker
+        state: restarted
+      when: docker_check.rc == 0
 
     - name: Restart sshd
       systemd:

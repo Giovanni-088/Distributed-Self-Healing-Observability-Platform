@@ -1,0 +1,163 @@
+---
+- name: Deploy Ubuntu Server observability stack
+  hosts: ubuntu_server
+  become: true
+  vars:
+    home_dir: "/home/{{ ansible_user }}"
+
+  tasks:
+    - name: Create service directories
+      file:
+        path: "{{ home_dir }}/{{ item }}"
+        state: directory
+        owner: "{{ ansible_user }}"
+        mode: "0755"
+      loop:
+        - observability/nginx
+        - observability/cadvisor
+        - observability/node-exporter
+
+    - name: Deploy nginx compose file
+      template:
+        src: ../templates/monitoring/nginx-compose.yml.j2
+        dest: "{{ home_dir }}/observability/nginx/docker-compose.yml"
+        owner: "{{ ansible_user }}"
+
+    - name: Deploy nginx config
+      template:
+        src: ../templates/monitoring/nginx.conf.j2
+        dest: "{{ home_dir }}/observability/nginx/nginx.conf"
+        owner: "{{ ansible_user }}"
+
+    - name: Deploy cadvisor compose file
+      template:
+        src: ../templates/monitoring/cadvisor-compose.yml.j2
+        dest: "{{ home_dir }}/observability/cadvisor/docker-compose.yml"
+        owner: "{{ ansible_user }}"
+
+    - name: Deploy node-exporter compose file
+      template:
+        src: ../templates/monitoring/node-exporter-compose.yml.j2
+        dest: "{{ home_dir }}/observability/node-exporter/docker-compose.yml"
+        owner: "{{ ansible_user }}"
+
+    - name: Start nginx stack
+      command: docker compose up -d
+      args:
+        chdir: "{{ home_dir }}/observability/nginx"
+
+    - name: Start cadvisor stack
+      command: docker compose up -d
+      args:
+        chdir: "{{ home_dir }}/observability/cadvisor"
+
+    - name: Start node-exporter stack
+      command: docker compose up -d
+      args:
+        chdir: "{{ home_dir }}/observability/node-exporter"
+
+
+- name: Deploy HP Observability stack
+  hosts: hp_observability
+  become: true
+  vars:
+    home_dir: "/home/{{ ansible_user }}"
+
+  tasks:
+    - name: Create service directories
+      file:
+        path: "{{ home_dir }}/{{ item }}"
+        state: directory
+        owner: "{{ ansible_user }}"
+        mode: "0755"
+      loop:
+        - observability/prometheus
+        - observability/grafana
+        - observability/alertmanager
+        - observability/loki
+        - observability/promtail
+        - observability/node-exporter
+
+    - name: Deploy prometheus compose file
+      template:
+        src: ../templates/monitoring/prometheus-compose.yml.j2
+        dest: "{{ home_dir }}/observability/prometheus/docker-compose.yml"
+        owner: "{{ ansible_user }}"
+
+    - name: Deploy prometheus config
+      template:
+        src: ../templates/monitoring/prometheus.yml.j2
+        dest: "{{ home_dir }}/observability/prometheus/prometheus.yml"
+        owner: "{{ ansible_user }}"
+
+    - name: Deploy grafana compose file
+      template:
+        src: ../templates/monitoring/grafana-compose.yml.j2
+        dest: "{{ home_dir }}/observability/grafana/docker-compose.yml"
+        owner: "{{ ansible_user }}"
+
+    - name: Deploy alertmanager compose file
+      template:
+        src: ../templates/monitoring/alertmanager-compose.yml.j2
+        dest: "{{ home_dir }}/observability/alertmanager/docker-compose.yml"
+        owner: "{{ ansible_user }}"
+
+    - name: Deploy alertmanager config
+      template:
+        src: ../templates/monitoring/alertmanager.yml.j2
+        dest: "{{ home_dir }}/observability/alertmanager/alertmanager.yml"
+        owner: "{{ ansible_user }}"
+
+    - name: Deploy loki compose file
+      template:
+        src: ../templates/monitoring/loki-compose.yml.j2
+        dest: "{{ home_dir }}/observability/loki/docker-compose.yml"
+        owner: "{{ ansible_user }}"
+
+    - name: Deploy promtail compose file
+      template:
+        src: ../templates/monitoring/promtail-compose.yml.j2
+        dest: "{{ home_dir }}/observability/promtail/docker-compose.yml"
+        owner: "{{ ansible_user }}"
+
+    - name: Deploy promtail config
+      template:
+        src: ../templates/monitoring/promtail.yml.j2
+        dest: "{{ home_dir }}/observability/promtail/promtail.yml"
+        owner: "{{ ansible_user }}"
+
+    - name: Deploy node-exporter compose file
+      template:
+        src: ../templates/monitoring/node-exporter-compose.yml.j2
+        dest: "{{ home_dir }}/observability/node-exporter/docker-compose.yml"
+        owner: "{{ ansible_user }}"
+
+    - name: Start prometheus stack
+      command: docker compose up -d
+      args:
+        chdir: "{{ home_dir }}/observability/prometheus"
+
+    - name: Start grafana stack
+      command: docker compose up -d
+      args:
+        chdir: "{{ home_dir }}/observability/grafana"
+
+    - name: Start alertmanager stack
+      command: docker compose up -d
+      args:
+        chdir: "{{ home_dir }}/observability/alertmanager"
+
+    - name: Start loki stack
+      command: docker compose up -d
+      args:
+        chdir: "{{ home_dir }}/observability/loki"
+
+    - name: Start promtail stack
+      command: docker compose up -d
+      args:
+        chdir: "{{ home_dir }}/observability/promtail"
+
+    - name: Start node-exporter stack
+      command: docker compose up -d
+      args:
+        chdir: "{{ home_dir }}/observability/node-exporter"
