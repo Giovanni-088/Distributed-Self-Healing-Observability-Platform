@@ -1,0 +1,60 @@
+---
+- name: Apply baseline hardening to all nodes
+  hosts: all
+  become: true
+
+  tasks:
+    - name: Install fail2ban
+      apt:
+        name: fail2ban
+        state: present
+        update_cache: true
+
+    - name: Ensure fail2ban is enabled and running
+      systemd:
+        name: fail2ban
+        enabled: true
+        state: started
+
+    - name: Install nftables
+      apt:
+        name: nftables
+        state: present
+
+    - name: Deploy nftables ruleset from template
+      template:
+        src: ../templates/nftables.conf.j2
+        dest: /etc/nftables.conf
+        mode: "0644"
+      notify: Reload nftables
+
+    - name: Ensure nftables is enabled and running
+      systemd:
+        name: nftables
+        enabled: true
+        state: started
+
+    - name: Ensure SSH root login is disabled
+      lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: '^#?PermitRootLogin'
+        line: 'PermitRootLogin no'
+      notify: Restart sshd
+
+    - name: Ensure SSH password authentication is disabled
+      lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: '^#?PasswordAuthentication'
+        line: 'PasswordAuthentication no'
+      notify: Restart sshd
+
+  handlers:
+    - name: Reload nftables
+      systemd:
+        name: nftables
+        state: restarted
+
+    - name: Restart sshd
+      systemd:
+        name: ssh
+        state: restarted
