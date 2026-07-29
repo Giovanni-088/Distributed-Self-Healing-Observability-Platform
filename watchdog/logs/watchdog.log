@@ -14,3 +14,7 @@
 2026-07-28 00:54:58,130 [WARNING] watchdog.main: nginx is not healthy (status: exited). Starting recovery...
 2026-07-28 00:54:58,906 [INFO] watchdog.recovery: Attempt 1/3: restarting nginx
 2026-07-28 00:55:02,439 [INFO] watchdog.recovery: nginx recovered successfully on attempt 1
+2026-07-29 21:53:33,086 [INFO] watchdog.main: Watchdog started. Monitoring: nginx, cadvisor, node-exporter
+2026-07-29 21:53:33,088 [INFO] watchdog.main: Check interval: 30s
+2026-07-29 22:05:52,373 [INFO] watchdog.main: Watchdog started. Monitoring: nginx, cadvisor, node-exporter
+2026-07-29 22:05:52,374 [INFO] watchdog.main: Check interval: 30s
