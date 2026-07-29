@@ -385,3 +385,27 @@ Rewrite the environment file using the syntax expected by systemd and verify the
 Files with the `.env` extension are not interpreted identically by every application. Always verify the expected syntax for the runtime environment instead of assuming shell-compatible behavior.
 
 ---
+
+## Python Virtual Environment Could Not Be Created
+
+### Problem
+
+Creating a Python virtual environment failed because `ensurepip` was unavailable.
+
+### Diagnosis
+
+The operating system did not include the Python virtual environment package by default.
+
+### Root Cause
+
+Some Debian installations require the corresponding `python3-venv` package to be installed separately.
+
+### Resolution
+
+Install the appropriate virtual environment package for the installed Python version and recreate the virtual environment.
+
+### Lesson Learned
+
+Do not assume Python development packages are installed by default across different Linux distributions. Verify package availability during deployment.
+
+---

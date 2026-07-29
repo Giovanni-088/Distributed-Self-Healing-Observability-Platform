@@ -92,6 +92,69 @@ Incident recorded
 
 The complete recovery cycle executed successfully without manual intervention, validating the primary objective of the Self-Healing Engine.
 
+### Observability Server Validation
+
+The recovery workflow was also validated on the Observability Server.
+
+A monitored container was intentionally stopped while the watchdog service was running.
+
+Observed behavior:
+
+- Failure detected automatically.
+- Recovery initiated immediately.
+- Telegram notification sent including the originating hostname.
+- Container successfully restarted.
+- Incident recorded in the recovery logs.
+
+This confirmed that multiple watchdog instances can operate simultaneously while sharing the same notification channel without ambiguity.
+
+## Distributed Deployment
+
+The Self-Healing Engine follows a distributed deployment model.
+
+Each Docker host executes an independent watchdog instance using the same codebase while monitoring a different set of local containers.
+
+Application Server:
+
+- nginx
+- cadvisor
+- node-exporter
+
+Observability Server:
+
+- prometheus
+- grafana
+- alertmanager
+- loki
+- promtail
+- node-exporter
+
+This design allows every node to recover independently without relying on a centralized recovery controller.
+
+## Node Identification
+
+Since multiple watchdog instances send notifications to the same Telegram chat, each message includes the hostname of the originating server.
+
+Example:
+
+```text
+🔴 Container Down [hostname]
+🟢 Recovery Successful [hostname]
+⚠️ Recovery Failed [hostname]
+```
+
+Including the hostname removes ambiguity during multi-node incident response and greatly simplifies troubleshooting.
+
+## Self-Healing Summary
+
+| Node | Recovery Mechanism | Protected Services |
+|------|--------------------|--------------------|
+| Application Server | Python Watchdog (systemd) | Application containers |
+| Observability Server | Python Watchdog (systemd) | Monitoring containers |
+| Edge Monitoring Node | systemd automatic restart | Native monitoring services |
+
+Each node implements the recovery strategy that best matches its architecture while maintaining the same self-healing objective across the platform.
+
 ## Future Improvements
 
 Planned enhancements include:

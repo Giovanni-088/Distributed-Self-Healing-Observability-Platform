@@ -44,6 +44,21 @@ Unlike the other nodes, this server runs native Prometheus exporters instead of 
 - Managed by systemd
 - ICMP probing enabled using Linux capabilities instead of root privileges
 
+## Service Resilience
+
+The Edge Monitoring Node does not run the Python Watchdog because it does not host Docker workloads.
+
+Instead, resilience is implemented directly through systemd.
+
+Both monitoring services are configured with automatic restart policies:
+
+- `Restart=always`
+- `RestartSec=5`
+
+This allows the operating system to recover failed services automatically without requiring an additional monitoring application.
+
+The solution provides a lightweight self-healing mechanism appropriate for a resource-constrained system.
+
 ## Status
 
 Current platform validation:
