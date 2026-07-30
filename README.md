@@ -245,6 +245,18 @@ Objectives:
 
 ---
 
+The infrastructure is fully reproducible through Ansible.
+
+Four dedicated playbooks manage the complete platform lifecycle:
+
+- **hardening.yml** — system hardening, firewall configuration, SSH hardening and security baseline.
+- **docker.yml** — Docker Engine installation and configuration for containerized nodes.
+- **monitoring.yml** — deployment of all monitoring and observability services.
+- **edge.yml** — native deployment of exporters on the Edge Monitoring Node without Docker.
+
+This approach allows the complete platform to be rebuilt from scratch without requiring undocumented manual configuration.
+
+---
 # Roadmap
 
 ## Phase 0 - Infrastructure
@@ -301,11 +313,16 @@ Objectives:
 
 ## Phase 6 - Automation
 
-* [x] Infrastructure Hardening Playbook
-* [x] Docker Deployment Playbook
-* [x] Monitoring Deployment Playbook
-* [x] Versioned Jinja2 Templates
-* [ ] CI/CD Pipeline
+## Phase 6 — Infrastructure as Code
+
+* [x] Ansible Control Node
+* [x] System hardening automation
+* [x] Docker Engine deployment
+* [x] Monitoring stack deployment
+* [x] Native Edge deployment
+* [x] Infrastructure templating
+* [x] Multi-node orchestration
+* [ ] CI/CD
 
 ---
 

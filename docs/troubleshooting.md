@@ -461,3 +461,25 @@ Infrastructure automation should permanently solve recurring operational issues.
 A manual fix is not considered complete until it is incorporated into the automation workflow itself.
 
 ---
+
+## community.general.capabilities Always Reports Changes
+
+### Problem
+
+The `community.general.capabilities` module reported a change during every execution, even when the required capability had already been applied.
+
+### Root Cause
+
+This module does not always detect existing Linux file capabilities with complete idempotency.
+
+### Impact
+
+The capability remains correctly configured, but Ansible may still report the task as changed.
+
+### Resolution
+
+No corrective action is required.
+
+This behavior is a known limitation of the module rather than a problem with the playbook implementation.
+
+---

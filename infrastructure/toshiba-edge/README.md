@@ -59,6 +59,21 @@ This allows the operating system to recover failed services automatically withou
 
 The solution provides a lightweight self-healing mechanism appropriate for a resource-constrained system.
 
+## Deployment with Ansible
+
+The Edge Monitoring Node is deployed using a dedicated Ansible playbook designed specifically for native services.
+
+Main tasks include:
+
+- Creating dedicated service accounts.
+- Downloading architecture-specific binaries.
+- Applying required Linux capabilities.
+- Deploying configuration files from templates.
+- Installing systemd services.
+- Enabling automatic service recovery.
+
+Unlike the remaining nodes, no Docker components are installed on this server.
+
 ## Status
 
 Current platform validation:
@@ -67,3 +82,9 @@ Current platform validation:
 - Blackbox Exporter reachable
 - Edge node successfully scraped by Prometheus
 - Integrated into the centralized observability platform
+- Node Exporter running
+- Blackbox Exporter running
+- Services enabled at boot
+- Automatic restart policies active
+- Successfully monitored by Prometheus
+- Fully reproducible using Ansible

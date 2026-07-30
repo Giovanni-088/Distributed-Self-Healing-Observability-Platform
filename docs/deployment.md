@@ -431,6 +431,23 @@ Infrastructure provisioning and configuration management are automated using Ans
 
 The Application Server acts as the control node, managing all infrastructure from a single location.
 
+### Native Edge Deployment
+
+The Edge Monitoring Node follows a dedicated deployment strategy that differs from the containerized nodes.
+
+Instead of Docker, Ansible deploys native Linux binaries together with version-controlled systemd unit files.
+
+The playbook performs the following tasks:
+
+- Creates dedicated system users.
+- Downloads architecture-specific binaries.
+- Applies Linux capabilities required for ICMP probing.
+- Deploys configuration files from Jinja2 templates.
+- Installs and enables systemd services.
+- Configures automatic restart policies.
+
+This playbook reflects the hardware constraints of the Edge node rather than enforcing Docker across all hosts.
+
 ### Inventory Design
 
 The inventory is organized by infrastructure role:
@@ -523,3 +540,18 @@ Before continuing:
 * [x] DNS resolution working.
 * [x] Required ports accessible.
 * [x] Monitoring services reachable.
+
+---
+
+## Final Ansible Playbooks
+
+| Playbook | Target Hosts | Purpose |
+|----------|--------------|---------|
+| hardening.yml | all | Security baseline, firewall and SSH hardening |
+| docker.yml | docker_hosts | Docker Engine installation |
+| monitoring.yml | ubuntu_server, hp_observability | Deploy monitoring services |
+| edge.yml | toshiba_edge | Native exporter deployment without Docker |
+
+Together these playbooks provide full Infrastructure as Code coverage for every node in the platform.
+
+---
