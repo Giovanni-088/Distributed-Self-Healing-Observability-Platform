@@ -1,0 +1,25 @@
+name: Deploy (Manual / On-Prem)
+
+# This project runs on on-premise hardware within a private LAN
+# (192.168.1.0/24), not accessible to GitHub-hosted runners.
+# Deployment is performed manually via Ansible from the control node
+# (Ubuntu Server), not through this pipeline.
+#
+# See: ansible/playbooks/ and docs/deployment.md for the real
+# deployment process.
+#
+# This workflow exists as a placeholder / documentation of intent,
+# and can be adapted if a self-hosted GitHub Actions runner is
+# added to the LAN in the future.
+
+on:
+  workflow_dispatch:
+
+jobs:
+  info:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deployment info
+        run: |
+          echo "This project deploys via Ansible from an on-prem control node."
+          echo "Run manually: ansible-playbook -i ansible/inventory/hosts.ini ansible/playbooks/<playbook>.yml"
