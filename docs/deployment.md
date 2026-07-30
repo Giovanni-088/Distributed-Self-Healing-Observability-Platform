@@ -555,3 +555,31 @@ Before continuing:
 Together these playbooks provide full Infrastructure as Code coverage for every node in the platform.
 
 ---
+
+## Continuous Integration
+
+The project includes three GitHub Actions workflows.
+
+### CI
+
+Validates:
+
+- Python code
+- Ansible playbooks
+- YAML syntax
+
+### Security Scan
+
+Runs Trivy filesystem scans on every push, pull request and scheduled execution.
+
+Current configuration reports findings without blocking the pipeline.
+
+### Deployment
+
+Deployment remains intentionally manual.
+
+Because the infrastructure runs inside a private LAN, GitHub-hosted runners cannot access the target servers.
+
+Instead of implementing a non-functional deployment pipeline, the repository documents the exact Ansible commands required for deployment.
+
+---

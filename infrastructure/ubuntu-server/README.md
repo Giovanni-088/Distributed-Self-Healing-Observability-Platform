@@ -380,3 +380,18 @@ Key design decisions include:
 This ensures that the recovery engine remains available after reboots without requiring manual intervention.
 
 ---
+
+## AI Incident Analyzer
+
+The AI analyzer is executed through a dedicated systemd timer.
+
+Components:
+
+- incident-analyzer.service
+- incident-analyzer.timer
+
+The timer executes the analyzer periodically after system startup and continues running at fixed intervals without user intervention.
+
+The service reuses the same Python virtual environment and environment variables as the watchdog.
+
+---

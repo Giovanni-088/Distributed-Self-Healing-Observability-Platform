@@ -483,3 +483,28 @@ No corrective action is required.
 This behavior is a known limitation of the module rather than a problem with the playbook implementation.
 
 ---
+
+## Environment Variables Available in Bash but Missing in Python
+
+### Problem
+
+The AI analyzer reported that required environment variables were missing even though they were visible in the interactive shell.
+
+### Root Cause
+
+Variables loaded with `source` were not exported to child processes because the environment file followed systemd's `EnvironmentFile` syntax.
+
+### Resolution
+
+For manual execution:
+
+```bash
+set -a
+source ~/.watchdog_env
+set +a
+python3 incident_analyzer.py
+```
+
+This exports all loaded variables to child processes while keeping production configuration compatible with systemd.
+
+---
